@@ -9,6 +9,7 @@ rospy.init_node("Testing123")
 
 try:
     image = rospy.wait_for_message('camera1/image_raw', Image, timeout=5)
+    image = ros_numpy.numpify(image)
     cv2.imwrite("image_save.png", image)
 except:
     print("Image not saved!!")
