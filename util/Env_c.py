@@ -49,8 +49,7 @@ class Env(gym.Env):
             self.threshold_arrive = 0.4
             self.min_range = 0.15
 
-        self.action_space = spaces.Discrete(5)
-        self.actions = {0: -1, 1: -0.5, 2:0, 3:0.5, 4:1}
+        self.action_space = spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float16)
         self.observation_space = spaces.Box(low=-1, high=1, shape=(14,), dtype=np.float16)
 
         self.distance_rate = 0
@@ -145,9 +144,8 @@ class Env(gym.Env):
 
     def step(self, action):
 
-        action = self.actions[action]
         self.steps += 1
-        ang_vel = action
+        ang_vel = action[0]
         vel_cmd = Twist()
         vel_cmd.linear.x = 0.25
         vel_cmd.angular.z = ang_vel
@@ -172,8 +170,8 @@ class Env(gym.Env):
         for a in self.previous_actions:
             state.append(a)
 
-        self.previous_actions.append(action)
-        reward = self.setReward(state, status, action)
+        self.previous_actions.append(action[0])
+        reward = self.setReward(state, status, action[0])
 
         return np.asarray(state), reward, done, {"Episode": self.episode}
 
