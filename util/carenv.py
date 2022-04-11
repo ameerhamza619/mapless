@@ -164,7 +164,7 @@ class CarEnv(gym.Env):
 
         obs = None
         if self.visual_obs:
-            cv2.imwrite(f"image_{self.n_steps}.png", image)
+            # cv2.imwrite(f"image_{self.n_steps}.png", image)
             image = PIL.Image.fromarray(image)
             di = get_depth(image, encoder, depth_decoder, w, h)[0] # get disparity map
             data = di.squeeze(0).squeeze(0).cpu().numpy()
@@ -256,6 +256,7 @@ class CarEnv(gym.Env):
         return reward
 
     def step(self, action):
+        print(action)
 
         ang_vel = (2 - action) * 1.5 * 0.5
 

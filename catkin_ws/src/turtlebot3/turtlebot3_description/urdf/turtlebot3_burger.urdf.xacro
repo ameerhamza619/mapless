@@ -197,17 +197,17 @@
   <!-- camera -->
   <gazebo reference="camera_link">
     <sensor type="camera" name="camera1">
-      <update_rate>30.0</update_rate>
+      <update_rate>10.0</update_rate>
       <camera name="head">
-        <horizontal_fov>1.3962634</horizontal_fov>
+        <horizontal_fov>1.085595</horizontal_fov>
         <image>
-          <width>304</width>
-          <height>228</height>
+          <width>640</width>
+          <height>192</height>
           <format>R8G8B8</format>
         </image>
         <clip>
-          <near>0.02</near>
-          <far>300</far>
+          <near>0.03</near>
+          <far>100</far>
         </clip>
         <noise>
           <type>gaussian</type>
@@ -220,7 +220,7 @@
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
+        <updateRate>10.0</updateRate>
         <cameraName>camera1</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -236,8 +236,8 @@
   </gazebo>
 
 
-  <!-- bumper
-  <joint name="bumper_joint" type="fixed">
+  <!-- bumper -->
+  <!-- <joint name="bumper_joint" type="fixed">
     <axis xyz="0 1 0" />
     <origin xyz="0.05 0 0.02" rpy="0 0 0"/>
     <parent link="base_link"/>
@@ -276,28 +276,10 @@
                 <frameName>world</frameName>
             </plugin>
             <always_on>true</always_on>
-            <update_rate>1000.</update_rate>
+            <update_rate>10</update_rate>
 
         </sensor>
     </gazebo>
-    -->
-    <!--
-    <gazebo reference="base_link">
-        <sensor name="collision_sensor" type="contact">
-            <plugin name="gazebo_ros_bumper_controller" filename="libgazebo_ros_bumper.so">
-                <bumpertopicname>bumper_vals</bumpertopicname>
-                <framename>world</framename>
-                <alwayson>true</alwayson>
-                <updaterate>1000.0</updaterate>
-            </plugin>
-
-            <always_on>true</always_on>
-            <update_rate>1000.</update_rate>
-            <contact>
-                <collision>base_footprint_fixed_joint_lump__bumper_collision_collision</collision>
-            </contact>
-        </sensor>
-    </gazebo>
-    -->
+     -->
 
 </robot>
