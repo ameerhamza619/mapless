@@ -274,7 +274,7 @@ class Env(gym.Env):
         # for a in self.previous_actions:
         #     state.append(a)
 
-        print(action)
+        # print(action)
         self.previous_actions = [action[0], action[1]]
         # self.previous_actions.append(action[0])
         reward = self.setReward(state, status, action)
