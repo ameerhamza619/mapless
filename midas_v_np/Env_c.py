@@ -172,7 +172,7 @@ class Env(gym.Env):
             prediction = model.forward(sample)
             prediction = prediction.squeeze().cpu().numpy()
             prediction = 255 - (255 * (prediction - prediction.min()) / (prediction.max() - prediction.min())).astype(np.uint8)
-            # cv2.imwrite(f'output/{self.steps}.png', prediction)
+            cv2.imwrite(f'/content/output/{self.steps}.png', prediction)
             # self.depth_img.publish(ros_numpy.msgify(Image, prediction, encoding='mono8'))
 
         spec_row = prediction[prediction.shape[0] // 2] # choose the middle row of the map
@@ -204,16 +204,16 @@ class Env(gym.Env):
         self.past_distance = self.current_distance
 
         if status['collide']:
-            rospy.loginfo("Collision!!")
-            # print("Collision!!")
+            # rospy.loginfo("Collision!!")
+            print("Collision!!")
             reward = -120 #50
             self.pub_cmd_vel.publish(Twist())
             self.goal_position_x, self.goal_position_y = self.respawn_goal.getPosition(True, delete=True)
             self.goal_distance = self.getGoalDistace()
 
         if status["goal"]:
-            rospy.loginfo("Goal!!")
-            # print("Goal!!")
+            # rospy.loginfo("Goal!!")
+            print("Goal!!")
             reward = 100
             self.pub_cmd_vel.publish(Twist())
             self.goal_position_x, self.goal_position_y = self.respawn_goal.getPosition(True, delete=True)
@@ -223,8 +223,8 @@ class Env(gym.Env):
         if status['limit']:
             reward = -120 #50 
             self.pub_cmd_vel.publish(Twist())
-            rospy.loginfo("Timesteps exceeded!!")
-            # print("Timesteps exceeded!!")
+            # rospy.loginfo("Timesteps exceeded!!")
+            print("Timesteps exceeded!!")
             self.goal_position_x, self.goal_position_y = self.respawn_goal.getPosition(True, delete=True)
             self.goal_distance = self.getGoalDistace()
 
