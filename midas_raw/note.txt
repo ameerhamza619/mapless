@@ -1,0 +1,2 @@
+- Using large world (goals location)
+- acceleration set to 0.005
