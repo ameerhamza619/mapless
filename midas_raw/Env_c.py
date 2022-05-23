@@ -48,8 +48,8 @@ normalization = NormalizeImage(
 transform = Compose(
     [
         Resize(
-            160 ,
-            128 ,
+            net_w ,
+            net_h ,
             resize_target=None,
             keep_aspect_ratio=True,
             ensure_multiple_of=32,
@@ -62,10 +62,6 @@ transform = Compose(
 )
 
 model.eval()
-
-if device == torch.device("cuda"):
-    model = model.to(memory_format=torch.channels_last)
-    model = model.half()
 
 model.to(device)
 
@@ -103,8 +99,8 @@ class Env(gym.Env):
             self.threshold_arrive = 0.4
             self.min_range = 0.15
 
-        self.action_space = spaces.Box(low=np.array([-1.0, 0]), high=np.array([1.0, 0.4]), dtype=np.float32)
-        self.observation_space = spaces.Box(low=0, high=1, shape=(128, 160, 1) ,dtype=np.float32)
+        self.action_space = spaces.Box(low=np.array([-1.0, 0]), high=np.array([1.0, 0.2]), dtype=np.float32)
+        self.observation_space = spaces.Box(low=0, high=1, shape=(192, 256, 1) ,dtype=np.float32)
 
         self.distance_rate = 0
         self.episode = 0
@@ -167,17 +163,13 @@ class Env(gym.Env):
         with torch.no_grad():
             sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
 
-            if device == torch.device("cuda"):
-                sample = sample.to(memory_format=torch.channels_last)  
-                sample = sample.half()
-
             prediction = model.forward(sample)
             prediction = prediction.squeeze().cpu().numpy()
             prediction = (255 * (prediction - prediction.min()) / (prediction.max() - prediction.min())) / 255.0
             # cv2.imwrite(f'output/{self.steps}.png', prediction)
             # self.depth_img.publish(ros_numpy.msgify(Image, prediction, encoding='mono8'))
 
-            obs = prediction.reshape(128, 160, 1)
+            obs = prediction.reshape(192, 256, 1)
 
         return obs, self.current_distance, self.heading, done, status
 
