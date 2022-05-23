@@ -103,7 +103,7 @@ class Env(gym.Env):
             self.threshold_arrive = 0.4
             self.min_range = 0.15
 
-        self.action_space = spaces.Box(low=np.array([-1.0, 0]), high=np.array([1.0, 0.2]), dtype=np.float32)
+        self.action_space = spaces.Box(low=np.array([-1.0, 0]), high=np.array([1.0, 0.4]), dtype=np.float32)
         self.observation_space = spaces.Box(low=0, high=1, shape=(128, 160, 1) ,dtype=np.float32)
 
         self.distance_rate = 0
