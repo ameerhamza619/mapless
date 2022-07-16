@@ -100,7 +100,7 @@ class Env(gym.Env):
             self.min_range = 0.15
 
         self.action_space = spaces.Box(low=np.array([-1.0, 0.05]), high=np.array([1.0, 0.2]), dtype=np.float32)
-        self.observation_space = spaces.Box(low=0, high=1, shape=(192, 256, 1) ,dtype=np.float32)
+        self.observation_space = spaces.Box(low=0, high=255, shape=(192, 256, 1) ,dtype=np.uint8)
 
         self.distance_rate = 0
         self.episode = 0
@@ -165,7 +165,7 @@ class Env(gym.Env):
 
             prediction = model.forward(sample)
             prediction = prediction.squeeze().cpu().numpy()
-            prediction = (255 * (prediction - prediction.min()) / (prediction.max() - prediction.min())) / 255.0
+            prediction = (255 * (prediction - prediction.min()) / (prediction.max() - prediction.min())).astype(np.unit8)
             # cv2.imwrite(f'output/{self.steps}.png', prediction)
             # self.depth_img.publish(ros_numpy.msgify(Image, prediction, encoding='mono8'))
 
