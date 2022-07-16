@@ -70,11 +70,11 @@ class Respawn():
             self.deleteModel()
 
         while position_check:
-            goal_x = random.randrange(-32, 32) / 10.0
-            goal_y = random.randrange(-32, 32) / 10.0
+            # goal_x = random.randrange(-32, 32) / 10.0
+            # goal_y = random.randrange(-32, 32) / 10.0
             
-            # goal_x = random.randrange(-12, 13) / 10.0
-            # goal_y = random.randrange(-12, 13) / 10.0
+            goal_x = random.randrange(-12, 13) / 10.0
+            goal_y = random.randrange(-12, 13) / 10.0
 
             if abs(goal_x - self.obstacle_1[0]) <= 0.4 and abs(goal_y - self.obstacle_1[1]) <= 0.4:
                 position_check = True
