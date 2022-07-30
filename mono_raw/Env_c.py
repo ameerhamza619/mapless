@@ -120,11 +120,9 @@ class Env(gym.Env):
 
         image = PIL.Image.fromarray(image)
         di = get_depth(image, encoder, depth_decoder, w, h)[0] # get disparity map
-        data = di.squeeze(0).squeeze(0).cpu().numpy()
+        prediction = di.squeeze(0).squeeze(0).cpu().numpy()
         ##
-        im = PIL.Image.fromarray(data)
-        im.save('frames/depth' + '.png')
-        image.save('frames/rgb' + '.png') 
+#         image.save('frames/rgb' + '.png') 
         ##
 
         prediction = (255 * (prediction - prediction.min()) / (prediction.max() - prediction.min())).astype(np.uint8)
